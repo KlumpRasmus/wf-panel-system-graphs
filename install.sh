@@ -43,7 +43,19 @@ meson compile -C "$build_dir"
 meson test -C "$build_dir" --print-errorlogs
 sudo meson install -C "$build_dir"
 
+config_dir=${XDG_CONFIG_HOME:-"$HOME/.config"}
+config_file="$config_dir/wf-panel-system-graphs.conf"
+if [ ! -e "$config_file" ]; then
+    mkdir -p -- "$config_dir"
+    install -m 644 -- \
+        "$project_dir/wf-panel-system-graphs.conf.example" "$config_file"
+    config_message="Created $config_file"
+else
+    config_message="Kept existing $config_file"
+fi
+
 printf '\n%s\n' \
     "Installed CPU Custom, GPU Custom, and Memory." \
+    "$config_message" \
     "Log out and back in so wf-panel-pi loads the new libraries." \
     "Then remove the built-in CPU/GPU entries and add the three custom graphs."

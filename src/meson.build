@@ -4,7 +4,7 @@ gtkmm = dependency('gtkmm-3.0', version: '>=3.24')
 # may be "undefined", so Meson cannot apply a numeric version constraint here.
 wfpanel = dependency('wf-panel-pi')
 
-common_sources = files('usage_graph.cpp')
+common_sources = files('usage_graph.cpp', 'colour_config.cpp')
 common_dependencies = [gtkmm, wfpanel]
 
 shared_module(

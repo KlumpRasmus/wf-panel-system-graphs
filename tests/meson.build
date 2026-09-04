@@ -17,3 +17,11 @@ system_stats_test = executable(
 )
 
 test('system-stats', system_stats_test)
+
+colour_config_test = executable(
+  'colour-config-test',
+  files('colour_config_test.cpp', '../src/colour_config.cpp'),
+  include_directories: include_directories('../src'),
+)
+
+test('colour-config', colour_config_test)

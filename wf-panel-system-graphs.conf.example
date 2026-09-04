@@ -1,0 +1,9 @@
+; Graph foreground colours. Hex values and GTK rgba(...) values are accepted.
+cpu=#53c86b
+gpu=#53c86b
+memory=#53c86b
+
+; Colours shared by all three graphs.
+background=rgba(64,64,64,0.55)
+text=white
+shadow=rgba(0,0,0,0.65)

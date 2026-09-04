@@ -15,4 +15,5 @@ sudo rm -f -- \
 
 printf '%s\n' \
     "Removed the custom CPU, GPU, and Memory plugin files." \
+    "Your ~/.config/wf-panel-system-graphs.conf file was preserved." \
     "Log out and back in to unload them from wf-panel-pi."

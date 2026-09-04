@@ -27,3 +27,10 @@ jobs:
             tests/system_stats_test.cpp src/cpu_sampler.cpp src/gpu_sampler.cpp \
             -o /tmp/system-stats-test
           /tmp/system-stats-test
+
+      - name: Build and run colour configuration tests
+        run: |
+          g++ -std=c++17 -Wall -Wextra -Wpedantic -Werror -Isrc \
+            tests/colour_config_test.cpp src/colour_config.cpp \
+            -o /tmp/colour-config-test
+          /tmp/colour-config-test

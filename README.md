@@ -63,6 +63,23 @@ reboot before installing if you want the installation to survive a reboot.
 - In the panel's plugin preferences: toggle the percentage and choose graph
   foreground/background colours.
 
+The installer also creates `~/.config/wf-panel-system-graphs.conf`. It controls
+the three graph colours independently and the shared background, text, and
+shadow colours:
+
+```ini
+cpu=#53c86b
+gpu=#53c86b
+memory=#53c86b
+background=rgba(64,64,64,0.55)
+text=white
+shadow=rgba(0,0,0,0.65)
+```
+
+The file takes precedence over the equivalent panel colour preferences. GTK
+colour names, `#RRGGBB`, and `rgba(...)` values are accepted. Saved changes are
+picked up automatically within about 1.5 seconds; no panel restart is needed.
+
 Memory uses `MemTotal - MemAvailable`. CPU uses deltas from `/proc/stat`. GPU
 uses the Pi V3D `gpu_stats` interface, with the older debugfs `gpu_usage`
 interface as a fallback.

@@ -1,5 +1,7 @@
 #include "usage_graph.hpp"
 
+#include "colour_config.hpp"
+
 #include <gtk-utils.hpp>
 #include <cairomm/context.h>
 #include <glib.h>
@@ -18,12 +20,29 @@ void set_source_rgba(
         colour.get_red(), colour.get_green(), colour.get_blue(),
         colour.get_alpha());
 }
+
+void apply_colour(
+    const std::optional<std::string>& value, Gdk::RGBA& destination)
+{
+    if (!value)
+    {
+        return;
+    }
+
+    Gdk::RGBA candidate;
+    if (candidate.set(*value))
+    {
+        destination = candidate;
+    }
+}
 } // namespace
 
 UsageGraphWidget::UsageGraphWidget(
     std::string plugin_id_value, std::string option_prefix,
-    std::string label_prefix_value, std::string unavailable_text_value)
+    std::string colour_key_value, std::string label_prefix_value,
+    std::string unavailable_text_value)
     : plugin_id(std::move(plugin_id_value)),
+      colour_key(std::move(colour_key_value)),
       label_prefix(std::move(label_prefix_value)),
       unavailable_text(std::move(unavailable_text_value)),
       show_percentage("panel/" + option_prefix + "_show_percentage"),
@@ -84,6 +103,17 @@ void UsageGraphWidget::read_settings()
     {
         background.set("rgba(64,64,64,0.55)");
     }
+
+    text_colour.set("white");
+    shadow_colour.set("rgba(0,0,0,0.65)");
+
+    const std::string config_path = std::string(g_get_user_config_dir()) +
+        "/wf-panel-system-graphs.conf";
+    const auto config = read_colour_config(config_path);
+    apply_colour(config.foreground_for(colour_key), foreground);
+    apply_colour(config.background, background);
+    apply_colour(config.text, text_colour);
+    apply_colour(config.shadow, shadow_colour);
 }
 
 void UsageGraphWidget::settings_changed()
@@ -110,6 +140,10 @@ void UsageGraphWidget::update_size()
 
 bool UsageGraphWidget::update()
 {
+    // This also makes edits to the per-user colour file take effect without
+    // restarting the panel.
+    read_settings();
+
     const auto sample = read_sample();
     if (!sample)
     {
@@ -180,14 +214,10 @@ bool UsageGraphWidget::draw(const Cairo::RefPtr<Cairo::Context>& context)
         const double x = (width - extents.width) / 2.0 - extents.x_bearing;
         const double y = (height - extents.height) / 2.0 - extents.y_bearing;
 
-        Gdk::RGBA shadow_colour;
-        shadow_colour.set("rgba(0,0,0,0.65)");
         set_source_rgba(context, shadow_colour);
         context->move_to(x + 1.0, y + 1.0);
         context->show_text(text);
 
-        Gdk::RGBA text_colour;
-        text_colour.set("white");
         set_source_rgba(context, text_colour);
         context->move_to(x, y);
         context->show_text(text);

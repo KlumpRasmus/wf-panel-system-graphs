@@ -39,7 +39,8 @@ class MemoryWidget final : public UsageGraphWidget
   public:
     MemoryWidget()
         : UsageGraphWidget(
-              "memory", "memory", "M", "Memory information unavailable")
+              "memory", "memory", "memory", "M",
+              "Memory information unavailable")
     {}
 
   protected:

@@ -24,7 +24,8 @@ class UsageGraphWidget : public WayfireWidget
   public:
     UsageGraphWidget(
         std::string plugin_id, std::string option_prefix,
-        std::string label_prefix, std::string unavailable_text);
+        std::string colour_key, std::string label_prefix,
+        std::string unavailable_text);
     ~UsageGraphWidget() override;
 
     void init(Gtk::HBox *container) override;
@@ -42,6 +43,7 @@ class UsageGraphWidget : public WayfireWidget
     void open_lxtask();
 
     std::string plugin_id;
+    std::string colour_key;
     std::string label_prefix;
     std::string unavailable_text;
 
@@ -57,6 +59,8 @@ class UsageGraphWidget : public WayfireWidget
 
     Gdk::RGBA foreground;
     Gdk::RGBA background;
+    Gdk::RGBA text_colour;
+    Gdk::RGBA shadow_colour;
     std::deque<double> history;
     double current_fraction = 0.0;
     bool have_current = false;

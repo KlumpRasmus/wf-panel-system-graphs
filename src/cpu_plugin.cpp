@@ -22,7 +22,8 @@ class CpuWidget final : public UsageGraphWidget
   public:
     CpuWidget()
         : UsageGraphWidget(
-              "cpugraph", "cpugraph", "C", "CPU information unavailable")
+              "cpugraph", "cpugraph", "cpu", "C",
+              "CPU information unavailable")
     {}
 
   protected:

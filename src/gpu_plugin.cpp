@@ -22,7 +22,8 @@ class GpuWidget final : public UsageGraphWidget
   public:
     GpuWidget()
         : UsageGraphWidget(
-              "gpugraph", "gpugraph", "G", "GPU information unavailable")
+              "gpugraph", "gpugraph", "gpu", "G",
+              "GPU information unavailable")
     {}
 
   protected:
