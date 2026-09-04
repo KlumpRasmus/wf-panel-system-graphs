@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<wf-panel-pi>
+  <plugin name="panel">
+    <_short>Panel</_short>
+    <group>
+      <_short>GPU Custom</_short>
+      <option name="gpugraph_show_percentage" type="bool">
+        <_short>GPU Custom Show Percentage</_short>
+        <default>true</default>
+      </option>
+      <option name="gpugraph_foreground" type="string">
+        <_short>GPU Custom Foreground</_short>
+        <default>#53c86b</default>
+      </option>
+      <option name="gpugraph_background" type="string">
+        <_short>GPU Custom Background</_short>
+        <default>rgba(64,64,64,0.55)</default>
+      </option>
+    </group>
+  </plugin>
+</wf-panel-pi>

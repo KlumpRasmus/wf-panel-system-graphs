@@ -1,0 +1,29 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  sampler-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Build and run memory tests
+        run: |
+          g++ -std=c++17 -Wall -Wextra -Wpedantic -Werror -Isrc \
+            tests/memory_stats_test.cpp src/memory_stats.cpp \
+            -o /tmp/memory-stats-test
+          /tmp/memory-stats-test
+
+      - name: Build and run CPU and GPU tests
+        run: |
+          g++ -std=c++17 -Wall -Wextra -Wpedantic -Werror -Isrc \
+            tests/system_stats_test.cpp src/cpu_sampler.cpp src/gpu_sampler.cpp \
+            -o /tmp/system-stats-test
+          /tmp/system-stats-test
